@@ -1,0 +1,40 @@
+
+
+insert into silver.crm_sales_details(
+sls_ord_num,
+sls_prd_key,
+sls_cust_id,
+sls_order_dt,
+sls_ship_dt,
+sls_due_dt,
+sls_sales,
+sls_quantity,
+sls_price
+)
+
+select 
+sls_ord_num,
+sls_prd_key,
+sls_cust_id, 
+case when isdate(sls_order_dt)= 1 or len(sls_order_dt) = 8 then sls_order_dt
+else null
+end as sls_order_dt,
+case when isdate(sls_ship_dt)= 1 or len(sls_ship_dt) = 8 then sls_ship_dt
+else null
+end as sls_ship_dt,
+
+case when isdate(sls_due_dt)= 1 or len(sls_due_dt) = 8 then sls_due_dt 
+else null
+end as sls_due_dt,
+case when sls_sales is null or sls_sales <= 0 or sls_sales != sls_quantity * sls_price
+then sls_quantity * sls_price
+else sls_sales
+end as sls_sales,
+case when sls_price is null or sls_price <= 0 
+then sls_sales / Nullif(sls_quantity, 0)
+else sls_price
+end as sls_price,
+sls_quantity
+from bronze.crm_sales_details
+
+

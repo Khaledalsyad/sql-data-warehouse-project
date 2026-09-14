@@ -1,0 +1,15 @@
+*.bkp
+*.bak
+*.log
+*.tmp
+
+# SQL Server local database files
+*.mdf
+*.ldf
+
+# Local datasets
+*.csv
+
+# OS
+Thumbs.db
+.DS_Store
