@@ -15,28 +15,33 @@ The data is processed through a Medallion-style architecture:
 Bronze → Silver → Gold
 
 ---
+## 🏗️ Architecture Diagram
 
-## 🏗️ Architecture
+The data warehouse follows a Medallion-style architecture that integrates data from CRM and ERP source systems.
 
-Source Systems
-      ↓
-CRM + ERP
-      ↓
-Bronze Layer
-      ↓
-Data Quality & Profiling
-      ↓
-Silver Layer
-      ↓
-Cleaning + Standardization + Business Rules
-      ↓
-Gold Layer
-      ↓
-Star Schema
-      ↓
-Analytics & Reporting
+```mermaid
+flowchart LR
 
----
+    CRM[(CRM Source System)]
+    ERP[(ERP Source System)]
+
+    CRM --> B[🥉 Bronze Layer]
+    ERP --> B
+
+    B --> P[🔍 Data Profiling & Quality Checks]
+
+    P --> S[🥈 Silver Layer]
+
+    S --> C[🧹 Cleaning & Standardization]
+    C --> R[📐 Business Rules & Data Integration]
+
+    R --> G[🥇 Gold Layer]
+
+    G --> D[⭐ Dimensional Model / Star Schema]
+
+    D --> A[📊 Analytics & Reporting]
+
+
 
 ## 🥉 Bronze Layer
 
